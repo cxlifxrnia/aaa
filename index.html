@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ваш сайт</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+            background-color: #f7f7f7;
+        }
+        
+        h1,
+        h2 {
+            color: #333;
+        }
+        
+        .question-container {
+            margin-top: 30px;
+        }
+        
+        .answer-container {
+            margin-top: 20px;
+            color: #333;
+        }
+        
+        #answerInput,
+        #secondQuestionInput,
+        #thirdQuestionInput {
+            width: 200px;
+            padding: 10px;
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        #checkAnswerButton,
+        #checkSecondAnswerButton,
+        #checkThirdAnswerButton {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        #checkAnswerButton:hover,
+        #checkSecondAnswerButton:hover,
+        #checkThirdAnswerButton:hover {
+            background-color: #45a049;
+        }
+        
+        .image-container {
+            margin-top: 20px;
+            max-width: 100%;
+        }
+        
+        .generated-text {
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 20px;
+            color: #4CAF50;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Кто это на картинке?</h1>
+
+    <div class="image-container">
+        <img src="huilo (1).jpg" alt="Ебанат">
+    </div>
+
+    <input type="text" id="answerInput" placeholder="Введите ответ">
+    <button onclick="checkAnswer()" id="checkAnswerButton">Проверить ответ</button>
+
+    <div id="answerOutput" class="answer-container"></div>
+
+    <div class="question-container">
+        <h2>А кто же это?</h2>
+
+        <input type="text" id="secondQuestionInput" placeholder="Введите ответ">
+        <button onclick="checkSecondAnswer()" id="checkSecondAnswerButton">Проверить ответ</button>
+
+        <div id="secondAnswerOutput" class="answer-container"></div>
+
+        <div class="image-container">
+            <img src="ars.png" alt="Арсений Моисеев">
+        </div>
+    </div>
+
+    <div class="question-container">
+        <h2>А вот этот человек кто?</h2>
+
+        <input type="text" id="thirdQuestionInput" placeholder="Введите ответ">
+        <button onclick="checkThirdAnswer()" id="checkThirdAnswerButton">Проверить ответ</button>
+
+        <div id="thirdAnswerOutput" class="answer-container"></div>
+
+        <div class="image-container">
+            <img src="image (9).png" alt="Отморозок">
+        </div>
+    </div>
+
+    <div id="generatedText" class="generated-text"></div>
+
+    <script>
+        var hasAnswered = false;
+        var hasAnsweredSecondQuestion = false;
+        var hasAnsweredThirdQuestion = false;
+
+        var expectedAnswer = "Ебанат";
+        var expectedSecondAnswer = "Дцп";
+        var expectedThirdAnswer = "Отморозок";
+
+        function typeAndEraseText(targetElement, text, speed) {
+            var i = 0;
+            var isErasing = false;
+
+            function type() {
+                targetElement.innerHTML += text.charAt(i);
+                i++;
+
+                if (i === text.length) {
+                    isErasing = true;
+                    setTimeout(erase, 1000);
+                } else {
+                    setTimeout(type, speed);
+                }
+            }
+
+            function erase() {
+                var currentText = targetElement.innerHTML;
+                currentText = currentText.slice(0, -1);
+                targetElement.innerHTML = currentText;
+
+                if (currentText === "") {
+                    isErasing = false;
+                    setTimeout(function() {
+                        targetElement.innerHTML = "";
+                        hasAnswered = true;
+                    }, 1000);
+                } else {
+                    setTimeout(erase, speed / 2);
+                }
+            }
+
+            type();
+        }
+
+        function checkAnswer() {
+            var userAnswer = document.getElementById("answerInput").value.trim().toLowerCase();
+            var answerElement = document.getElementById("answerOutput");
+            var generatedTextElement = document.getElementById("generatedText");
+            answerElement.innerHTML = "";
+
+            if (userAnswer === expectedAnswer.toLowerCase() && !hasAnswered) {
+                var answer = "Абсолютно верно, это ебучий долбаеб, алкаш в 18 лет, потерянное в жизни уебище :)";
+
+                typeAndEraseText(answerElement, answer, 50);
+                hasAnswered = true;
+
+                // Генерация и вывод дополнительного текста
+                var generatedText = "Сегодня в 6 не получится, максимум в 9-10, есть дела лютие про тглтн берил 8х";
+                typeAndEraseText(generatedTextElement, generatedText, 50);
+            }
+        }
+
+        function checkSecondAnswer() {
+            var userAnswer = document.getElementById("secondQuestionInput").value.trim().toLowerCase();
+            var answerElement = document.getElementById("secondAnswerOutput");
+            var generatedTextElement = document.getElementById("generatedText");
+            answerElement.innerHTML = "";
+
+            if (userAnswer === expectedSecondAnswer.toLowerCase() && !hasAnsweredSecondQuestion) {
+                var answer = "Верно! Как же не угадать такого обморока? Это самая последняя сверхстадия отсталости в развитии, а именно двухгугловая проебина в мозгах, Арсений Моисеев!";
+
+                typeAndEraseText(answerElement, answer, 50);
+                hasAnsweredSecondQuestion = true;
+
+                // Генерация и вывод дополнительного текста
+                var generatedText = "В нахабино сегодня хз";
+                typeAndEraseText(generatedTextElement, generatedText, 50);
+            }
+        }
+
+        function checkThirdAnswer() {
+            var userAnswer = document.getElementById("thirdQuestionInput").value.trim().toLowerCase();
+            var answerElement = document.getElementById("thirdAnswerOutput");
+            var generatedTextElement = document.getElementById("generatedText");
+            answerElement.innerHTML = "";
+
+            if (userAnswer === expectedThirdAnswer.toLowerCase() && !hasAnsweredThirdQuestion) {
+                var answer = "Вы удивляете меня своими правильными ответами... Хотя чего тут удивляться, это такой же отморозок-палочник, у которого скоро отвалятся руки и ноги от количества алкоголя в его мертвой крови.";
+
+                typeAndEraseText(answerElement, answer, 50);
+                hasAnsweredThirdQuestion = true;
+
+                // Генерация и вывод дополнительного текста
+                var generatedText = "Да, абсолютно верно, это ебучая проебина, долбаеб, потерянное в жизни существо, спившиеся в 16 лет! :)";
+                typeAndEraseText(generatedTextElement, generatedText, 50);
+            }
+        }
+    </script>
+
+</body>
+
+</html>
